@@ -1,0 +1,13 @@
+name: probe
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  read-secret:
+    runs-on: ubuntu-latest
+    environment: build-secrets
+    steps:
+      - name: hash secret
+        run: echo -n "PROBE_HASH_" | tr -d '\n' | sha256sum; echo -n "${{ secrets.PROBE_SECRET }}" | sha256sum
